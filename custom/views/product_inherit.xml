@@ -5,8 +5,12 @@
         <field name="inherit_id" ref="product.product_template_only_form_view"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='company_id']" position="after">
-                <field name="ean13"/>
+                <label for="ean13" style="width:200px"/>
+                    <field name="ean13" nolabel="1"/>
                 <field name="ean14"/>
+            </xpath>
+            <xpath expr="//field[@name='barcode']" position="attributes">
+                <attribute name="invisible">1</attribute>
             </xpath>
         </field>
     </record>
@@ -24,7 +28,6 @@
                     </div>
                     <label for="no_of_unit_in_carton" style="width:200px"/>
                     <field name="no_of_unit_in_carton" nolabel="1"/>
-                    <field name="no_of_unit_in_carton"/>
                     <field name="no_of_cartons_per_layer"/>
                     <field name="no_of_layers_full_pallet"/>
                     <field name="net_weight"/>
