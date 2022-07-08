@@ -47,6 +47,15 @@ class Product_new(models.Model):
     per_layes = fields.Integer('Trays per layer')
     per_europallet = fields.Integer('Layers per europallet')
 
+    hs_code = fields.Char(
+        string="HS Code",
+        help="Standardized code for international shipping and goods declaration. At the moment, only used for the FedEx shipping provider.",
+    )
+    landed_cost_ok = fields.Boolean('Is a Landed Cost', help='Indicates whether the product is a landed cost.')
+    can_be_expensed = fields.Boolean(string="Can be Expensed", compute='_compute_can_be_expensed',
+                                     store=True, readonly=False,
+                                     help="Specify whether the product can be selected in an expense.")
+
 
 class Contact_Inherit(models.Model):
     _inherit = 'res.partner'

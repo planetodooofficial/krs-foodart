@@ -32,9 +32,11 @@
         <field name="arch" type="xml">
             <xpath expr="//form/sheet/notebook/page[@name='other_info']/group/group[@name='accounting_info_group']/field[@name='invoice_incoterm_id']"
                    position="after">
+                <field name="user_id" string="Purchase Representative"/>
                 <field name="new_account"/>
                 <field name="new_account_date"/>
                 <field name="new_ref_des"/>
+                <field name="invoice_payment_term_id"/>
                 <!-- invoice new field-->
                 <field name="new_incoterms_id" widget="selection"/>
             </xpath>
@@ -57,8 +59,7 @@
                     <field name="box_ean14"/>
                 </group>
             </xpath>
-            <!--            <field name="landed_cost_ok"/>-->
-            <!--            <field name="can_be_expensed"/>-->
+
             <xpath expr="//field[@name='barcode']" position="replace">
                 <field name="barcode"/>
             </xpath>
@@ -75,6 +76,17 @@
                     <field name="invoice_policy" widget="radio"/>
                     <field name="expense_policy" widget="radio"/>
                 </group>
+            </xpath>
+
+             <xpath expr="//form/sheet[@name='product_form']/div[@name='options']" position="inside">
+                <span class="d-inline-block">
+                    <field name="landed_cost_ok"/>
+                    <label for="landed_cost_ok"/>
+                </span>
+                <span class="d-inline-block">
+                    <field name="can_be_expensed"/>
+                    <label for="can_be_expensed"/>
+                </span>
             </xpath>
         </field>
     </record>

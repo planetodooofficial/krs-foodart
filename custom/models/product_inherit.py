@@ -11,3 +11,4 @@ class ProductInherit(models.Model):
     gross_weight = fields.Char('Gross Weight')
     ean13 = fields.Char('Single Unit Barcode/ EAN13')
     ean14 = fields.Char('Carton Barcode/ EAN14')
+

@@ -50,6 +50,7 @@
                     <field name="product_tray"/>
                     <field name="per_layes"/>
                     <field name="per_europallet"/>
+                    <field name="hs_code"/>
                     <field name="responsible_id"/>
                 </group>
             </xpath>
