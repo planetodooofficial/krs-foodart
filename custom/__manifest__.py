@@ -2,14 +2,15 @@
     'name': 'Kairos Food Art',
     'version': '2.0',
     'category': 'Hidden',
+    'sequence': -100,
     'summary': 'FoodArt',
-    'depends': ['purchase','account','sale'],
+    'depends': ['purchase','account','sale','product'],
     'data': [
         # 'security/ir.models.access.csv',
-        'views/product_inherit.xml'
+        'views/product_inherit.xml',
+        'views/sale_inherit.xml',
     ],
     'installable': True,
     'auto_install': False,
-
     'license': 'LGPL-3',
 }

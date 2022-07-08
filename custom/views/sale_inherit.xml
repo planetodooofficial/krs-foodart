@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="inherit_sale_view" model="ir.ui.view">
+        <field name="name">inherit.sale.view</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet//group/field[@name='payment_term_id']" position="after">
+                <field name="carrier_id"/>
+            </xpath>
+
+            <xpath expr="//form/sheet/notebook/page[@name='order_lines']/field[@name='order_line']/tree/field[@name='product_uom']"
+                   position="after">
+                <field name="new_route"/>
+            </xpath>
+            <xpath expr="//form/sheet/notebook/page[@name='order_lines']/field[@name='order_line']/tree/field[@name='price_unit']"
+                   position="after">
+                <field name="bruto_weight"/>
+                <field name="nett_weight"/>
+            </xpath>
+            <xpath expr="//form/sheet/notebook/page[@name='other_information']/group/group[@name='sale_shipping']"
+                   position="inside">
+                <field name="effective_date"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="inherit_account_move_view" model="ir.ui.view">
+        <field name="name">inherit.account.move.view</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet/notebook/page[@name='other_info']/group/group[@name='accounting_info_group']/field[@name='invoice_incoterm_id']"
+                   position="after">
+                <field name="new_account"/>
+                <field name="new_account_date"/>
+                <field name="new_ref_des"/>
+                <!-- invoice new field-->
+                <field name="new_incoterms_id" widget="selection"/>
+            </xpath>
+            <!--            <xpath expr="//form/sheet/notebook/page[@name='other_info']" position="inside">-->
+            <!--                <field name="new_tax_line_id"/>-->
+            <!--            </xpath>-->
+            <xpath expr="//group[@id='header_right_group']/div[2]" position="after">
+                <field name="currency_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="inherit_product_temp_view" model="ir.ui.view">
+        <field name="name">inherit.product.temp.view</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='general_information']/group" position="inside">
+                <group>
+                    <field name="box_ean14"/>
+                </group>
+            </xpath>
+            <!--            <field name="landed_cost_ok"/>-->
+            <!--            <field name="can_be_expensed"/>-->
+            <xpath expr="//field[@name='barcode']" position="replace">
+                <field name="barcode"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="inherit_product_temp_view" model="ir.ui.view">
+        <field name="name">inherit.product.temp.view</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='sales']/group[@name='sale']" position="after">
+                <group name="invoicing" string="Invoicing">
+                    <field name="invoice_policy" widget="radio"/>
+                    <field name="expense_policy" widget="radio"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="inherit_contact_new_view" model="ir.ui.view">
+        <field name="name">inherit.contact.new.view</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='property_payment_term_id']" position="before">
+                <field name="is_customer"/>
+            </xpath>
+            <xpath expr="//field[@name='property_supplier_payment_term_id']" position="before">
+                <field name="is_vendor"/>
+            </xpath>
+
+            <xpath expr="//field[@name='function']" position="replace">
+                <field name="function"/>
+            </xpath>
+
+            <xpath expr="//field[@name='title']" position="replace">
+                <field name="title"/>
+            </xpath>
+
+            <xpath expr="//field[@name='property_payment_term_id']" position="before">
+                <field name="message_bounce"/>
+                <field name="barcode"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="inherit_purchase_id_view" model="ir.ui.view">
+        <field name="name">inherit.purchase.id.view</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@name='products']/field[@name='order_line']/tree/field[@name='product_qty']"
+                   position="before">
+                <field name="company_id"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
