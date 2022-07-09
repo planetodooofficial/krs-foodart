@@ -7,6 +7,7 @@
     'depends': ['purchase','account','sale','product'],
     'data': [
         # 'security/ir.models.access.csv',
+        'wizard/Contacts_Import_View.xml',
         'views/product_inherit.xml',
         'views/sale_inherit.xml',
     ],
