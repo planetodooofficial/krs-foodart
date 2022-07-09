@@ -129,7 +129,7 @@ class CustomerWizard(models.TransientModel):
                     'email': email,
                     'website': website,
                     'lang': language,
-                    'category_id': [(4, category_id.id)],
+                    # 'category_id': [(4, category_id.id)],
                     'create_uid': create_uid.id,
                     'created_by_custom': create_uid.id,
                     'is_customer': True if is_a_customer == "True" else False,
