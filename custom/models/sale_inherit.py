@@ -65,6 +65,7 @@ class Contact_Inherit(models.Model):
 
     is_customer = fields.Boolean('Is a customer')
     is_vendor = fields.Boolean('Is a Vendor')
+    created_by_custom = fields.Many2one(comodel_name="res.users", string="Created by")
     custom_id = fields.Char("Custom ID")
 
 
