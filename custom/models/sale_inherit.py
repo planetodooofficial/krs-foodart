@@ -6,6 +6,7 @@ class Sale_Inherite(models.Model):
 
     carrier_id = fields.Many2one('delivery.carrier', 'Carrier', required=True, ondelete='cascade')
     effective_date = fields.Date('Effective Date', required=True)
+    custom_id = fields.Char("Custom ID")
 
 
 class Sale_Inherit_line(models.Model):
@@ -26,6 +27,7 @@ class Vender_bills_new(models.Model):
     # invoice fields
     new_incoterms_id = fields.Many2one('account.incoterms', 'Incoterms')
     currency_id = fields.Many2one('res.currency', string='Currency')
+    custom_id = fields.Char("Custom ID")
 
     # new_tax_line_id = fields.One2many('new.tax.line','parent_id','tax line')
 
@@ -55,6 +57,7 @@ class Product_new(models.Model):
     can_be_expensed = fields.Boolean(string="Can be Expensed", compute='_compute_can_be_expensed',
                                      store=True, readonly=False,
                                      help="Specify whether the product can be selected in an expense.")
+    custom_id = fields.Char("Custom ID")
 
 
 class Contact_Inherit(models.Model):
@@ -62,9 +65,12 @@ class Contact_Inherit(models.Model):
 
     is_customer = fields.Boolean('Is a customer')
     is_vendor = fields.Boolean('Is a Vendor')
+    created_by_custom = fields.Many2one(comodel_name="res.users", string="Created by")
+    custom_id = fields.Char("Custom ID")
 
 
 class Purchase_Inherit(models.Model):
     _inherit = 'purchase.order'
 
     company_id = fields.Many2one('res.company', required=True)
+    custom_id = fields.Char("Custom ID")
