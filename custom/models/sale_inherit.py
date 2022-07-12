@@ -58,6 +58,21 @@ class Product_new(models.Model):
                                      store=True, readonly=False,
                                      help="Specify whether the product can be selected in an expense.")
     custom_id = fields.Char("Custom ID")
+    new_tax_line_id = fields.One2many('product.customerinfo', 'parent_id', 'tax line')
+
+
+class product_customerinfo_line(models.Model):
+    _name = 'product.customerinfo'
+
+    prod_cust_id = fields.Many2one('product.template', 'Product Custom ID')
+    name = fields.Many2one('res.partner', 'Customer')
+    product_id = fields.Many2one('product.product', 'Product Variant')
+    product_name = fields.Char('Customer Product Name')
+    product_code = fields.Char('Customer Product Code')
+    min_qty = fields.Float('Minimal Quantity')
+    price = fields.Float('Price')
+    date_start = fields.Date('Start Date')
+    date_end = fields.Date('End Date')
 
 
 class Contact_Inherit(models.Model):
