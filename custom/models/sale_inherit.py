@@ -59,7 +59,7 @@ class Product_new(models.Model):
                                      help="Specify whether the product can be selected in an expense.")
     custom_id = fields.Char("Custom ID")
     new_tax_line_id = fields.One2many('product.customerinfo', 'prod_cust_id', 'Customers')
-    company_id = fields.Many2one('res.company', 'Company')
+
 
 
 class product_customerinfo_line(models.Model):
@@ -74,6 +74,7 @@ class product_customerinfo_line(models.Model):
     price = fields.Float('Price')
     date_start = fields.Date('Start Date')
     date_end = fields.Date('End Date')
+    company_id = fields.Many2one('res.company', 'Company')
 
 
 class Contact_Inherit(models.Model):
