@@ -76,7 +76,7 @@
                     <field name="invoice_policy" widget="radio"/>
                     <field name="expense_policy" widget="radio"/>
                 </group>
-
+                <h1>Customer</h1>
                 <field name="new_tax_line_id">
                     <tree>
                         <field name="name"/>
