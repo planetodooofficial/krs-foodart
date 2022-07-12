@@ -76,7 +76,20 @@
                     <field name="invoice_policy" widget="radio"/>
                     <field name="expense_policy" widget="radio"/>
                 </group>
-                <field name="new_tax_line_id"/>
+                <group>
+                    <field name="new_tax_line_id">
+                        <tree>
+                            <field name="name"/>
+                            <field name="product_id"/>
+                            <field name="product_name"/>
+                            <field name="product_code"/>
+                            <field name="min_qty"/>
+                            <field name="price"/>
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                        </tree>
+                    </field>
+                </group>
             </xpath>
 
             <xpath expr="//form/sheet[@name='product_form']/div[@name='options']" position="inside">
