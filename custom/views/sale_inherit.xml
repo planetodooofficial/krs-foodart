@@ -66,6 +66,18 @@
         </field>
     </record>
 
+<!--    <record id="inherit_product_sup_view" model="ir.ui.view">-->
+<!--        <field name="name">inherit.product.sup.view</field>-->
+<!--        <field name="model">product.supplierinfo</field>-->
+<!--        <field name="inherit_id" ref=""/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//page[@name='purchase']" position="after">-->
+<!--                <field name="new_blanket_order"/>-->
+<!--                &lt;!&ndash; <field name="new_currency"/>&ndash;&gt;-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+
     <record id="inherit_product_temp_view" model="ir.ui.view">
         <field name="name">inherit.product.temp.view</field>
         <field name="model">product.template</field>
@@ -87,9 +99,9 @@
                         <field name="price"/>
                         <field name="date_start"/>
                         <field name="date_end"/>
+                        <field name="company_id"/>
                     </tree>
                 </field>
-
             </xpath>
 
             <xpath expr="//form/sheet[@name='product_form']/div[@name='options']" position="inside">
