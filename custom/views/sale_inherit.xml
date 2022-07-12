@@ -76,9 +76,10 @@
                     <field name="invoice_policy" widget="radio"/>
                     <field name="expense_policy" widget="radio"/>
                 </group>
+                <field name="new_tax_line_id"/>
             </xpath>
 
-             <xpath expr="//form/sheet[@name='product_form']/div[@name='options']" position="inside">
+            <xpath expr="//form/sheet[@name='product_form']/div[@name='options']" position="inside">
                 <span class="d-inline-block">
                     <field name="landed_cost_ok"/>
                     <label for="landed_cost_ok"/>
