@@ -101,7 +101,7 @@ class SOWizard(models.TransientModel):
                 incoterm_id = self.env["account.incoterms"].search([('name', '=', incoterm)])
 
                 search_sale_order = self.env["sale.order"].search(
-                    [('name', '=', order_reference), ('custom_so_id', '=', id)])
+                    [('name', '=', order_reference), ('custom_id', '=', id)])
 
                 so_val = {
                     'custom_id': id,
