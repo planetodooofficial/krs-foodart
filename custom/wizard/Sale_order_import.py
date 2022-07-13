@@ -81,7 +81,7 @@ class SOWizard(models.TransientModel):
                 opportunity_id = self.env["crm.lead"].search([('name', '=', opportunity)], limit=1)
 
                 part_id = self.env["res.partner"].search(
-                    [('name', '=', customer), ('id_custom', '=', customer_id), '|', ('active', '=', True),
+                    [('name', '=', customer), ('custom_id', '=', customer_id), '|', ('active', '=', True),
                      ('active', '=', False)], limit=1)
                 invoice_addr = self.env["res.partner"].search(
                     [('parent_id', '=', part_id.id), ("type", "=", 'invoice')], limit=1)
