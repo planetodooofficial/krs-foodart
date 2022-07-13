@@ -1,3 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access.customer.wizard,access_customer_wizard,model_customer_wizard,base.group_user,1,1,1,1
 access.product.customerinfo,access_product_customerinfo,model_product_customerinfo,base.group_user,1,1,1,1
+access.so.wizard,access_so_wizard,model_so_wizard,base.group_user,1,1,1,1
