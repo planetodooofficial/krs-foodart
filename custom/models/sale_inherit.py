@@ -4,7 +4,7 @@ from odoo import api, fields, models, _
 class Sale_Inherite(models.Model):
     _inherit = 'sale.order'
 
-    carrier_id = fields.Many2one('delivery.carrier', 'Carrier', required=True, ondelete='cascade')
+    carrier_id = fields.Many2one('delivery.carrier', 'Carrier', ondelete='cascade')
     effective_date = fields.Date('Effective Date', required=True)
     custom_id = fields.Char("Custom ID")
 
