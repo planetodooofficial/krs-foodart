@@ -8,6 +8,7 @@
     'data': [
         'security/ir.model.access.csv',
         'wizard/Contacts_Import_View.xml',
+        'wizard/Sale_order_import_view.xml',
         'views/product_inherit.xml',
         'views/sale_inherit.xml',
     ],
