@@ -130,6 +130,7 @@ class SOWizard(models.TransientModel):
                     'client_order_ref': customer_reference,
                     'require_signature': online_signature,
                     'require_payment': online_payment,
+                    'company_id': company_id.id,
                     'origin': source_document,
                     'opportunity_id': opportunity_id.id,
                 }
