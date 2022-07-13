@@ -128,8 +128,8 @@ class SOWizard(models.TransientModel):
                     'tag_ids': [(6, 0, tag_ids.ids)],
                     'team_id': team_id.id,
                     'client_order_ref': customer_reference,
-                    'require_signature': online_signature,
-                    'require_payment': online_payment,
+                    'require_signature': True if online_signature == "True" else False,
+                    'require_payment': True if online_payment == "True" else False,
                     'company_id': company_id.id,
                     'origin': source_document,
                     'opportunity_id': opportunity_id.id,
@@ -160,21 +160,18 @@ class SOWizard(models.TransientModel):
             else:
                 print(value)
                 sale_order_id = value[0]
-                order_lines_is_a_service = value[1]
-                order_lines_product = value[2]
-                order_lines_internal_reference = value[3]
-                order_lines_oem = value[4]
-                order_lines_description = value[5]
-                order_lines_ordered_quantity = value[6]
-                order_lines_delivered_quantity = value[7]
-                order_lines_invoiced_quantity = value[8]
-                order_lines_unit_of_measure = value[9]
-                order_lines_analytic_tags = value[10]
-                order_lines_warehouse = value[11]
-                order_lines_unit_price = value[12]
-                order_lines_taxes = value[13] or None
-                order_lines_discount = value[14]
-                order_lines_display_type = value[15]
+                order_lines_product = value[1]
+                order_lines_internal_reference = value[2]
+                order_lines_description = value[3]
+                order_lines_ordered_quantity = value[4]
+                order_lines_unit_of_measure = value[5]
+                order_lines_route = value[6]
+                order_lines_unit_price = value[7]
+                order_lines_bruto_weight = value[8]
+                order_lines_nett_weight = value[9]
+                order_lines_taxes = value[10] or None
+                order_lines_discount = value[11]
+                order_lines_display_type = value[12]
 
                 if not order_lines_product:
                     order_lines_product = 'Service'
@@ -193,25 +190,17 @@ class SOWizard(models.TransientModel):
                         product_id = self.env['product.product'].search(
                             [('name', '=', order_lines_product), '|', ('active', '=', True), ('active', '=', False)], limit=1)
 
-                analytic_tags_ids = self.env["account.analytic.tag"].search([('name', '=', order_lines_analytic_tags)],
-                                                                            limit=1)
                 tax_id = self.env["account.tax"].search([('name', '=', order_lines_taxes)], limit=1)
-                order_lines_warehouse_id = self.env["stock.warehouse"].search([('name', '=', order_lines_warehouse)],
-                                                                              limit=1)
                 order_id = self.env["sale.order"].search([('custom_so_id', '=', sale_order_id)])
                 lst = []
 
                 if order_id:
                     if order_lines_product and product_id:
                         so_line_vals = {
-                            'is_service': True if order_lines_is_a_service == "True" else False,
                             'product_id': product_id.id,
-                            'product_oem_code': order_lines_oem,
                             'name': order_lines_description,
                             'product_uom_qty': order_lines_ordered_quantity,
-                            'warehouse_id': order_lines_warehouse_id.id,
                             'product_uom': product_uom_id.id,
-                            'analytic_tag_ids': [(6, 0, analytic_tags_ids.ids)],
                             'price_unit': order_lines_unit_price,
                             'tax_id': [(6, 0, tax_id.ids)],
                             'discount': order_lines_discount,
