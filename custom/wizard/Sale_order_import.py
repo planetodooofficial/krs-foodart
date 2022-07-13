@@ -191,7 +191,7 @@ class SOWizard(models.TransientModel):
                             [('name', '=', order_lines_product), '|', ('active', '=', True), ('active', '=', False)], limit=1)
 
                 tax_id = self.env["account.tax"].search([('name', '=', order_lines_taxes)], limit=1)
-                order_id = self.env["sale.order"].search([('custom_so_id', '=', sale_order_id)])
+                order_id = self.env["sale.order"].search([('custom_id', '=', sale_order_id)])
                 lst = []
 
                 if order_id:
