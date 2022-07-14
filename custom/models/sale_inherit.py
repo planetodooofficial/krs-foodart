@@ -61,7 +61,6 @@ class Product_new(models.Model):
     new_tax_line_id = fields.One2many('product.customerinfo', 'prod_cust_id', 'Customers')
 
 
-
 class product_customerinfo_line(models.Model):
     _name = 'product.customerinfo'
 
@@ -91,3 +90,10 @@ class Purchase_Inherit(models.Model):
 
     company_id = fields.Many2one('res.company', required=True)
     custom_id = fields.Char("Custom ID")
+
+
+class Project_inherit_new(models.Model):
+    _inherit = 'project.project'
+
+    allow_forecast = fields.Boolean('Allow forecast')
+    sub_task_project_new = fields.Many2one('project.project', 'Sub-task Project')

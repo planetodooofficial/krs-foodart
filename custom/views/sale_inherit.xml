@@ -66,17 +66,17 @@
         </field>
     </record>
 
-<!--    <record id="inherit_product_sup_view" model="ir.ui.view">-->
-<!--        <field name="name">inherit.product.sup.view</field>-->
-<!--        <field name="model">product.supplierinfo</field>-->
-<!--        <field name="inherit_id" ref=""/>-->
-<!--        <field name="arch" type="xml">-->
-<!--            <xpath expr="//page[@name='purchase']" position="after">-->
-<!--                <field name="new_blanket_order"/>-->
-<!--                &lt;!&ndash; <field name="new_currency"/>&ndash;&gt;-->
-<!--            </xpath>-->
-<!--        </field>-->
-<!--    </record>-->
+    <!--    <record id="inherit_product_sup_view" model="ir.ui.view">-->
+    <!--        <field name="name">inherit.product.sup.view</field>-->
+    <!--        <field name="model">product.supplierinfo</field>-->
+    <!--        <field name="inherit_id" ref=""/>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <xpath expr="//page[@name='purchase']" position="after">-->
+    <!--                <field name="new_blanket_order"/>-->
+    <!--                &lt;!&ndash; <field name="new_currency"/>&ndash;&gt;-->
+    <!--            </xpath>-->
+    <!--        </field>-->
+    <!--    </record>-->
 
     <record id="inherit_product_temp_view" model="ir.ui.view">
         <field name="name">inherit.product.temp.view</field>
@@ -156,4 +156,35 @@
         </field>
     </record>
 
+    <record id="inherit_project_project_view" model="ir.ui.view">
+        <field name="name">inherit.project.project.view</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <div>
+                    <field name="allow_forecast" nolabel="1"/>
+                    <label for="allow_forecast" style="font-weight:bold;"/>
+                </div>
+            </xpath>
+            <xpath expr="//page[@name='settings']/group/group" position="inside">
+                <field name="analytic_account_id" invisible="0"/>
+                <field name="sub_task_project_new"/>
+            </xpath>
+            <xpath expr="//notebook/page[@name='settings']/group" position="after">
+                <group>
+                    <group>
+                        <h2>Configuration</h2>
+                        <field name="sequence"/>
+                        <field name="company_id"/>
+                    </group>
+                    <group>
+                        <h2>Time Scheduling</h2>
+                        <field name="resource_calendar_id"/>
+                    </group>
+                </group>
+            </xpath>
+
+        </field>
+    </record>
 </odoo>
