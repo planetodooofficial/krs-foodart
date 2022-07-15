@@ -149,11 +149,11 @@ class PO1Wizard(models.TransientModel):
                         pro_id = self.env['product.product'].search(
                             [('name', '=', order_lines_product), '|', ('active', '=', True), ('active', '=', False)], limit=1)
 
-                account_analytic_id = self.env['account.analytic.account'].search(
-                    [('name', '=', order_lines_analytic_account), '|', ('active', '=', True), ('active', '=', False)],
-                    limit=1)
+                # account_analytic_id = self.env['account.analytic.account'].search(
+                #     [('name', '=', order_lines_analytic_account), '|', ('active', '=', True), ('active', '=', False)],
+                #     limit=1)
                 tax_id = self.env['account.tax'].search([('name', '=', order_lines_taxes)], limit=1)
-                analytic_tag_ids = self.env['account.analytic.tag'].search([('name', '=', order_lines_analytic_tags)])
+                # analytic_tag_ids = self.env['account.analytic.tag'].search([('name', '=', order_lines_analytic_tags)])
 
                 order_id = self.env["purchase.order"].search([('custom_po_id', '=', purchase_order_id)])
 
