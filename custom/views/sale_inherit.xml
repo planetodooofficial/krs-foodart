@@ -52,35 +52,6 @@
     <record id="inherit_product_temp_view" model="ir.ui.view">
         <field name="name">inherit.product.temp.view</field>
         <field name="model">product.template</field>
-        <field name="inherit_id" ref="product.product_template_only_form_view"/>
-        <field name="arch" type="xml">
-            <xpath expr="//page[@name='general_information']/group" position="inside">
-                <group>
-                    <field name="box_ean14"/>
-                </group>
-            </xpath>
-
-            <xpath expr="//field[@name='barcode']" position="replace">
-                <field name="barcode"/>
-            </xpath>
-        </field>
-    </record>
-
-    <!--    <record id="inherit_product_sup_view" model="ir.ui.view">-->
-    <!--        <field name="name">inherit.product.sup.view</field>-->
-    <!--        <field name="model">product.supplierinfo</field>-->
-    <!--        <field name="inherit_id" ref=""/>-->
-    <!--        <field name="arch" type="xml">-->
-    <!--            <xpath expr="//page[@name='purchase']" position="after">-->
-    <!--                <field name="new_blanket_order"/>-->
-    <!--                &lt;!&ndash; <field name="new_currency"/>&ndash;&gt;-->
-    <!--            </xpath>-->
-    <!--        </field>-->
-    <!--    </record>-->
-
-    <record id="inherit_product_temp_view" model="ir.ui.view">
-        <field name="name">inherit.product.temp.view</field>
-        <field name="model">product.template</field>
         <field name="inherit_id" ref="product.product_template_form_view"/>
         <field name="arch" type="xml">
             <xpath expr="//page[@name='sales']/group[@name='sale']" position="after">
@@ -113,6 +84,21 @@
                     <field name="can_be_expensed"/>
                     <label for="can_be_expensed"/>
                 </span>
+            </xpath>
+
+            <xpath expr="//page[@name='general_information']/group/group/field[@name='detailed_type']" position="after">
+                <field name="box_ean14"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="inherit_product_templet_new_view" model="ir.ui.view">
+        <field name="name">inherit.product.templet.new.view</field>
+         <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='barcode']" position="attributes">
+                <attribute name='invisible'>1</attribute>
             </xpath>
         </field>
     </record>
@@ -185,6 +171,17 @@
                 </group>
             </xpath>
 
+        </field>
+    </record>
+
+    <record id="inherit_project_task_new" model="ir.ui.view">
+        <field name="name">inherit.project.task.new</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='email_from']" position="replace">
+                <field name="email_from" string="Email"/>
+            </xpath>
         </field>
     </record>
 </odoo>
