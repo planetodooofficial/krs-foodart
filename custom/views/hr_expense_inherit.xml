@@ -9,7 +9,6 @@
                 <field name="unit_amount"/>
                 <field name="quantity"/>
                 <field name="product_uom_id"/>
-                <field name="sale_order_id"/>
             </xpath>
         </field>
     </record>
