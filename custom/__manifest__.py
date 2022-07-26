@@ -12,6 +12,7 @@
         'wizard/purchase_order_import_view.xml',
         'views/product_inherit.xml',
         'views/sale_inherit.xml',
+        'views/hr_expense_inherit.xml',
     ],
     'installable': True,
     'auto_install': False,
