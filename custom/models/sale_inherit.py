@@ -97,3 +97,12 @@ class Project_inherit_new(models.Model):
 
     allow_forecast = fields.Boolean('Allow forecast')
     sub_task_project_new = fields.Many2one('project.project', 'Sub-task Project')
+
+
+class Inherit_Manufacture(models.Model):
+    _inherit = 'mrp.production'
+
+    new_availability = fields.Selection(
+        [('assigned', 'Available'), ('partially_available', 'Partially Available'), ('waiting', 'Waiting'),
+         ('none', 'None')],
+        'Materials Availability')
