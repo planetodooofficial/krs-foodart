@@ -12,3 +12,8 @@ class ProductInherit(models.Model):
     ean13 = fields.Char('Single Unit Barcode/ EAN13')
     ean14 = fields.Char('Carton Barcode/ EAN14')
 
+    # Dates Group
+    new_use_time = fields.Integer('Product Use Time')
+    new_life_time = fields.Integer('Product Life Time')
+    new_removeal_time = fields.Integer('Product Removal Time')
+    new_alert_time = fields.Integer('Product Alert Time')
