@@ -60,6 +60,10 @@ class Product_new(models.Model):
     custom_id = fields.Char("Custom ID")
     new_tax_line_id = fields.One2many('product.customerinfo', 'prod_cust_id', 'Customers')
 
+    @api.depends('type')
+    def _compute_can_be_expensed(self):
+        self.filtered(lambda p: p.type not in ['consu', 'service']).update({'can_be_expensed': False})
+
 
 class product_customerinfo_line(models.Model):
     _name = 'product.customerinfo'
