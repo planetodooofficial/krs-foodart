@@ -56,7 +56,7 @@ class PO1Wizard(models.TransientModel):
                 warehouse_id = self.env["stock.warehouse"].search([('name', '=', deliver_to_warehouse)], limit=1)
                 c_id = self.env['res.currency'].search([('name', '=', currency)], limit=1)
                 part_id = self.env['res.partner'].search(
-                    [('name', '=', vendor), ('id_custom', '=', vendor_id), '|', ('active', '=', True),
+                    [('name', '=', vendor), ('custom_id', '=', vendor_id), '|', ('active', '=', True),
                      ('active', '=', False)], limit=1)
                 use_id = self.env['res.users'].search(
                     [('name', '=', purchase_representative), '|', ('active', '=', True), ('active', '=', False)],
