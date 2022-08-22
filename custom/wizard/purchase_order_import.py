@@ -155,7 +155,7 @@ class PO1Wizard(models.TransientModel):
                 tax_id = self.env['account.tax'].search([('name', '=', order_lines_taxes)], limit=1)
                 # analytic_tag_ids = self.env['account.analytic.tag'].search([('name', '=', order_lines_analytic_tags)])
 
-                order_id = self.env["purchase.order"].search([('custom_po_id', '=', purchase_order_id)])
+                order_id = self.env["purchase.order"].search([('custom_id', '=', purchase_order_id)])
 
                 lst = []
                 if order_id:
@@ -201,7 +201,7 @@ class PO1Wizard(models.TransientModel):
                 order_reference = value[1]
                 status = value[2]
 
-                search_purchase_order = self.env["purchase.order"].search([('custom_po_id', '=', id)])
+                search_purchase_order = self.env["purchase.order"].search([('custom_id', '=', id)])
 
                 if search_purchase_order:
                     search_purchase_order.write({'state': status})
