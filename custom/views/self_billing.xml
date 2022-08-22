@@ -1,0 +1,71 @@
+<odoo>
+    <data>
+        <!--        form view for self billing -->
+        <record id="self_billing_view_form" model="ir.ui.view">
+            <field name="name">self.billing.view.form</field>
+            <field name="model">self.billing</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <field name="state" readonly="1" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <field name="order_date"/>
+                            <field name="end_date"/>
+                            <field name="invoice_created" readonly="1" />
+                        </group>
+                        <notebook>
+                            <page>
+                                <field name="billing_o2m">
+                                    <tree editable="1" >
+                                        <field name="product"/>
+                                        <field name="uom"/>
+                                        <field name="net_price"/>
+                                        <field name="reduction"/>
+                                        <field name="vat"/>
+                                        <field name="quantity"/>
+                                        <field name="total"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--        tree view for voucher -->
+        <record id="self_billing_view_tree" model="ir.ui.view">
+            <field name="name">self.billing.view.tree</field>
+            <field name="model">self.billing</field>
+            <field name="arch" type="xml">
+                <tree string="Self billing">
+                    <field name="name"/>
+                    <field name="order_date"/>
+                    <field name="end_date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--               action for self billing -->
+        <record id="action_self_billing" model="ir.actions.act_window">
+            <field name="name">Self billing</field>
+            <field name="res_model">self.billing</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <menuitem id="parent_seller_self_billing_order_all" name="Self billing"
+                  parent="account.menu_finance_configuration" action="action_self_billing" />
+        <menuitem id="menu_seller_self_billing_order_all" name="Self billing"
+                  parent="parent_seller_self_billing_order_all" action="action_self_billing" sequence="1"/>
+
+    </data>
+</odoo>
