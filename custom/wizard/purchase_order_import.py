@@ -128,8 +128,8 @@ class PO1Wizard(models.TransientModel):
                     order_lines_product = 'Service'
                     order_lines_internal_reference = 'Service'
 
-                if not order_lines_analytic_account:
-                    order_lines_analytic_account = 'NOT DEFINE'
+                # if not order_lines_analytic_account:
+                #     order_lines_analytic_account = 'NOT DEFINE'
 
                 # pro_id = self.env['product.product'].search(
                 #     [('name', '=', order_lines_product), ('default_code', '=', order_lines_internal_reference), '|',
