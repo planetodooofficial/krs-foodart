@@ -33,6 +33,12 @@ class StockPicking(models.Model):
 
 	force_date = fields.Datetime(string="Force Date")
 
+    # this code has to remove
+	@api.onchange('move_ids_without_package')
+	def set_force_date(self):
+		for rec in self:
+			rec.force_date = rec.scheduled_date
+
 	# Cj
 	@api.onchange('force_date')
 	def _verify_force_date(self):
