@@ -1,5 +1,6 @@
 from odoo import api, fields, models, _
-
+from odoo.exceptions import ValidationError
+import re
 
 class Sale_Inherite(models.Model):
     _inherit = 'sale.order'
@@ -11,9 +12,16 @@ class Sale_Inherite(models.Model):
 
 class Sale_Inherit_line(models.Model):
     _inherit = 'sale.order.line'
+
     new_route = fields.Many2one('stock.location.route', 'Route')
-    bruto_weight = fields.Float('Brut Weight')
-    nett_weight = fields.Float('Nett Weight')
+    bruto_weight = fields.Float('Brut Weight', compute="set_weight")
+    nett_weight = fields.Float('Nett Weight', compute="set_weight")
+
+    @api.depends('product_uom_qty')
+    def set_weight(self):
+        for rec in self:
+            rec.bruto_weight = float(rec.product_id.bruto_weight) * rec.product_uom_qty
+            rec.nett_weight = float(rec.product_id.net_weight) * rec.product_uom_qty
 
 
 class Vender_bills_new(models.Model):
@@ -28,42 +36,6 @@ class Vender_bills_new(models.Model):
     new_incoterms_id = fields.Many2one('account.incoterms', 'Incoterms')
     currency_id = fields.Many2one('res.currency', string='Currency')
     custom_id = fields.Char("Custom ID")
-
-    # new_tax_line_id = fields.One2many('new.tax.line','parent_id','tax line')
-
-
-# class new_tax_line(models.Model):
-#     _name = 'new.tax.line'
-#
-#     parent_id = fields.Many2one('account.move', 'parent id')
-#     tax_desc = fields.Char('Tax Description')
-#     tax_acc = fields.Many2one('account.account','Tax Account')
-#     total_amount = fields.Monetory('Amount Total')
-
-class Product_new(models.Model):
-    _inherit = 'product.template'
-
-    box_ean14 = fields.Char('Box EAN14')
-    bruto_weight = fields.Float('Bruto Weight')
-    product_tray = fields.Integer('Consumable Products/Tray')
-    per_layes = fields.Integer('Trays per layer')
-    per_europallet = fields.Integer('Layers per europallet')
-
-    hs_code = fields.Char(
-        string="HS Code",
-        help="Standardized code for international shipping and goods declaration. At the moment, only used for the FedEx shipping provider.",
-    )
-    landed_cost_ok = fields.Boolean('Is a Landed Cost', help='Indicates whether the product is a landed cost.')
-    can_be_expensed = fields.Boolean(string="Can be Expensed", compute='_compute_can_be_expensed',
-                                     store=True, readonly=False,
-                                     help="Specify whether the product can be selected in an expense.")
-    custom_id = fields.Char("Custom ID")
-    new_tax_line_id = fields.One2many('product.customerinfo', 'prod_cust_id', 'Customers')
-
-    @api.depends('type')
-    def _compute_can_be_expensed(self):
-        self.filtered(lambda p: p.type not in ['consu', 'service']).update({'can_be_expensed': False})
-
 
 class product_customerinfo_line(models.Model):
     _name = 'product.customerinfo'

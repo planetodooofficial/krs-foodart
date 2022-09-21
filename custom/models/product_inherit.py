@@ -1,12 +1,11 @@
 from odoo import api, fields, models, _
+import re
+from odoo.exceptions import ValidationError
 
 
 class ProductInherit(models.Model):
     _inherit = 'product.template'
 
-    no_of_unit_in_carton = fields.Char('Number Of Units In a Carton')
-    no_of_cartons_per_layer = fields.Char('Number Of Cartons Per Layer')
-    no_of_layers_full_pallet = fields.Char('Number Of Layers Full Pallet')
     net_weight = fields.Char('Net Weight')
     gross_weight = fields.Char('Gross Weight')
     ean13 = fields.Char('Single Unit Barcode/ EAN13')
@@ -17,3 +16,40 @@ class ProductInherit(models.Model):
     new_life_time = fields.Integer('Product Life Time')
     new_removeal_time = fields.Integer('Product Removal Time')
     new_alert_time = fields.Integer('Product Alert Time')
+
+    box_ean14 = fields.Char('Box EAN14')
+    bruto_weight = fields.Float('Bruto Weight')
+    product_tray = fields.Integer('Consumable Products/Tray')
+    per_layes = fields.Integer('Trays per layer')
+    per_europallet = fields.Integer('Layers per europallet')
+
+    @api.onchange('net_weight')
+    def check_net_weight(self):
+        net_weight = re.findall(r'[a-zA-Z]', self.net_weight)
+        if self.net_weight and net_weight:
+            raise ValidationError("Please Enter Correct Net Weight !")
+
+    hs_code = fields.Char(
+        string="HS Code",
+        help="Standardized code for international shipping and goods declaration. At the moment, only used for the FedEx shipping provider.",
+    )
+    landed_cost_ok = fields.Boolean('Is a Landed Cost', help='Indicates whether the product is a landed cost.')
+    can_be_expensed = fields.Boolean(string="Can be Expensed", compute='_compute_can_be_expensed',
+                                     store=True, readonly=False,
+                                     help="Specify whether the product can be selected in an expense.")
+    custom_id = fields.Char("Custom ID")
+    new_tax_line_id = fields.One2many('product.customerinfo', 'prod_cust_id', 'Customers')
+
+    @api.depends('type')
+    def _compute_can_be_expensed(self):
+        self.filtered(lambda p: p.type not in ['consu', 'service']).update({'can_be_expensed': False})
+
+
+class ProductInherit(models.Model):
+    _inherit = 'product.product'
+
+    @api.onchange('net_weight')
+    def check_net_weight(self):
+        net_weight = re.findall(r'[a-zA-Z]', self.net_weight)
+        if self.net_weight and net_weight:
+            raise ValidationError("Please Enter Correct Net Weight !")
