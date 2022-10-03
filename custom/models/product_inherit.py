@@ -25,9 +25,10 @@ class ProductInherit(models.Model):
 
     @api.onchange('net_weight')
     def check_net_weight(self):
-        net_weight = re.findall(r'[a-zA-Z]', self.net_weight)
-        if self.net_weight and net_weight:
-            raise ValidationError("Please Enter Correct Net Weight !")
+        try:
+            float(self.net_weight)
+        except:
+            raise ValidationError('Value Should be Integer for Float Only !')
 
     hs_code = fields.Char(
         string="HS Code",
