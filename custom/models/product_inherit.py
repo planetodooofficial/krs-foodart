@@ -11,12 +11,6 @@ class ProductInherit(models.Model):
     ean13 = fields.Char('Single Unit Barcode/ EAN13')
     ean14 = fields.Char('Carton Barcode/ EAN14')
 
-    # Dates Group
-    new_use_time = fields.Integer('Product Use Time')
-    new_life_time = fields.Integer('Product Life Time')
-    new_removeal_time = fields.Integer('Product Removal Time')
-    new_alert_time = fields.Integer('Product Alert Time')
-
     box_ean14 = fields.Char('Box EAN14')
     bruto_weight = fields.Float('Bruto Weight')
     product_tray = fields.Integer('Consumable Products/Tray')
@@ -51,6 +45,7 @@ class ProductInherit(models.Model):
 
     @api.onchange('net_weight')
     def check_net_weight(self):
-        net_weight = re.findall(r'[a-zA-Z]', self.net_weight)
-        if self.net_weight and net_weight:
-            raise ValidationError("Please Enter Correct Net Weight !")
+        try:
+            float(self.net_weight)
+        except:
+            raise ValidationError('Value Should be Integer for Float Only !')

@@ -45,26 +45,6 @@
                     <field name="produce_delay"/>
                 </group>
             </xpath>
-            <xpath expr="//group[@name='operations']" position="after">
-                <group string="Dates">
-                    <label for="new_use_time"/>
-                    <div>
-                        <field name="new_use_time" style="width:50px;"/>days
-                    </div>
-                    <label for="new_life_time"/>
-                    <div>
-                        <field name="new_life_time" style="width:50px;"/>days
-                    </div>
-                    <label for="new_removeal_time"/>
-                    <div>
-                        <field name="new_removeal_time" style="width:50px;"/>days
-                    </div>
-                    <label for="new_alert_time"/>
-                    <div>
-                        <field name="new_alert_time" style="width:50px;"/>days
-                    </div>
-                </group>
-            </xpath>
             <xpath expr="//group[@name='group_lots_and_weight']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
