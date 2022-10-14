@@ -43,7 +43,7 @@ class Sale_Inherit_line(models.Model):
 
         self._compute_tax_id()
         # Commented the below code so that on change of product or Qty Unit Price should not get affected
-        prd_price = self.product_id.new_tax_line_id.filtered(lambda rec: rec.name.id == self.order_id.partner_id.id and rec.prod_cust_id.default_code == self.product_id.default_code and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id and rec.date_start <= date.today() <= rec.date_end).mapped('price')
+        prd_price = self.product_id.new_tax_line_id.filtered(lambda rec: rec.name.id == self.order_id.partner_id.id and rec.prod_cust_id.default_code == self.product_id.default_code and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id).mapped('price')
         if prd_price:
             vals['price_unit'] = prd_price[0]
         # if self.order_id.pricelist_id and self.order_id.partner_id:
@@ -77,7 +77,7 @@ class Sale_Inherit_line(models.Model):
             # Commented the below code so that on change of product or Qty Unit Price should not get affected
             prd_price = self.product_id.new_tax_line_id.filtered(lambda \
                     rec: rec.name.id == self.order_id.partner_id.id and rec.prod_cust_id.default_code == self.product_id.default_code \
-                         and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id and rec.date_start <= date.today() <= rec.date_end).mapped('price')
+                         and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id).mapped('price')
             if prd_price:
                 self.price_unit = prd_price[0]
             else:
