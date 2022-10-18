@@ -1,5 +1,5 @@
 from odoo import api, fields, models, _
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
 from datetime import date
 import re
 
@@ -43,7 +43,18 @@ class Sale_Inherit_line(models.Model):
 
         self._compute_tax_id()
         # Commented the below code so that on change of product or Qty Unit Price should not get affected
-        prd_price = self.product_id.new_tax_line_id.filtered(lambda rec: rec.name.id == self.order_id.partner_id.id and rec.prod_cust_id.default_code == self.product_id.default_code and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id).mapped('price')
+        for i in self.product_id.new_tax_line_id:
+            if (i.date_start and i.date_end is False):
+                prd_price = self.product_id.new_tax_line_id.filtered(lambda rec: rec.name.id == self.order_id.partner_id.id and rec.prod_cust_id.default_code == self.product_id.default_code and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id).mapped(
+                    'price')
+            elif (i.date_start is False and i.date_end is not False):
+                prd_price = self.product_id.new_tax_line_id.filtered(lambda rec: rec.name.id == self.order_id.partner_id.id and rec.prod_cust_id.default_code == self.product_id.default_code and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id and date.today() <= rec.date_end).mapped(
+                    'price')
+            elif (i.date_start is not False and i.date_end is False):
+                prd_price = self.product_id.new_tax_line_id.filtered(lambda rec: rec.name.id == self.order_id.partner_id.id and rec.prod_cust_id.default_code == self.product_id.default_code and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id and rec.date_start <= date.today()).mapped(
+                    'price')
+            elif (i.date_start is not False and i.date_end is not False):
+                prd_price = self.product_id.new_tax_line_id.filtered(lambda rec: rec.name.id == self.order_id.partner_id.id and rec.prod_cust_id.default_code == self.product_id.default_code and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id and rec.date_start <= date.today() and rec.date_end >= date.today()).mapped('price')
         if prd_price:
             vals['price_unit'] = prd_price[0]
         # if self.order_id.pricelist_id and self.order_id.partner_id:
@@ -75,9 +86,23 @@ class Sale_Inherit_line(models.Model):
                 fiscal_position=self.env.context.get('fiscal_position')
             )
             # Commented the below code so that on change of product or Qty Unit Price should not get affected
-            prd_price = self.product_id.new_tax_line_id.filtered(lambda \
-                    rec: rec.name.id == self.order_id.partner_id.id and rec.prod_cust_id.default_code == self.product_id.default_code \
-                         and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id).mapped('price')
+            for i in self.product_id.new_tax_line_id:
+                if (i.date_start and i.date_end is False):
+                    prd_price = self.product_id.new_tax_line_id.filtered(lambda
+                                                                             rec: rec.name.id == self.order_id.partner_id.id and rec.prod_cust_id.default_code == self.product_id.default_code and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id).mapped(
+                        'price')
+                elif (i.date_start is False and i.date_end is not False):
+                    prd_price = self.product_id.new_tax_line_id.filtered(lambda
+                                                                             rec: rec.name.id == self.order_id.partner_id.id and rec.prod_cust_id.default_code == self.product_id.default_code and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id and date.today() <= rec.date_end).mapped(
+                        'price')
+                elif (i.date_start is not False and i.date_end is False):
+                    prd_price = self.product_id.new_tax_line_id.filtered(lambda
+                                                                             rec: rec.name.id == self.order_id.partner_id.id and rec.prod_cust_id.default_code == self.product_id.default_code and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id and rec.date_start <= date.today()).mapped(
+                        'price')
+                elif (i.date_start is not False and i.date_end is not False):
+                    prd_price = self.product_id.new_tax_line_id.filtered(lambda
+                                                                             rec: rec.name.id == self.order_id.partner_id.id and rec.prod_cust_id.default_code == self.product_id.default_code and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id and rec.date_start <= date.today() and rec.date_end >= date.today()).mapped(
+                        'price')
             if prd_price:
                 self.price_unit = prd_price[0]
             else:
@@ -96,14 +121,7 @@ class Sale_Inherit_line(models.Model):
             'product_id', 'name', 'product_uom', 'tax_id', 'analytic_tag_ids'
         ]
 
-    # @api.onchange('product_uom_qty')
-    # def set_price(self):
-    #     print(self.product_id.new_tax_line_id.filtered(lambda rec: rec.name == self.order_id.partner_id and rec.prod_cust_id.default_code == self.product_id.default_code and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id).mapped('price')[0])
-    #     # if self.product_id:
-    #     #     for rec in self.product_id.new_tax_line_id:
-    #     #         if rec.name == self.order_id.partner_id and rec.prod_cust_id.default_code == self.product_id.default_code and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id:
-    #     #             print(rec.price)
-    #     #             self.price_unit = rec.price
+
 class Vender_bills_new(models.Model):
     _inherit = 'account.move'
 
