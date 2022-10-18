@@ -42,6 +42,7 @@ class Sale_Inherit_line(models.Model):
         )
 
         self._compute_tax_id()
+        prd_price = 0.0
         # Commented the below code so that on change of product or Qty Unit Price should not get affected
         for i in self.product_id.new_tax_line_id:
             if (i.date_start and i.date_end is False):
