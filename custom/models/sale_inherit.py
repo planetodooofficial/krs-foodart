@@ -87,6 +87,7 @@ class Sale_Inherit_line(models.Model):
                 fiscal_position=self.env.context.get('fiscal_position')
             )
             # Commented the below code so that on change of product or Qty Unit Price should not get affected
+            prd_price = 0.0
             for i in self.product_id.new_tax_line_id:
                 if (i.date_start and i.date_end is False):
                     prd_price = self.product_id.new_tax_line_id.filtered(lambda
