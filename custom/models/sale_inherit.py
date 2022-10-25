@@ -45,17 +45,17 @@ class Sale_Inherit_line(models.Model):
         prd_price = 0.0
         # Commented the below code so that on change of product or Qty Unit Price should not get affected
         for i in self.product_id.new_tax_line_id:
-            if (i.date_start is False and i.date_end is False):
+            if (i.date_start and i.date_end is False):
                 prd_price = self.product_id.new_tax_line_id.filtered(lambda rec: rec.name.id == self.order_id.partner_id.id and rec.prod_cust_id.default_code == self.product_id.default_code and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id).mapped(
                     'price')
-            elif (i.date_start is False and i.date_end is not False):
-                prd_price = self.product_id.new_tax_line_id.filtered(lambda rec: rec.name.id == self.order_id.partner_id.id and rec.prod_cust_id.default_code == self.product_id.default_code and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id and date.today() <= rec.date_end).mapped(
-                    'price')
-            elif (i.date_start is not False and i.date_end is False):
-                prd_price = self.product_id.new_tax_line_id.filtered(lambda rec: rec.name.id == self.order_id.partner_id.id and rec.prod_cust_id.default_code == self.product_id.default_code and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id and rec.date_start <= date.today()).mapped(
-                    'price')
-            elif (i.date_start is not False and i.date_end is not False):
-                prd_price = self.product_id.new_tax_line_id.filtered(lambda rec: rec.name.id == self.order_id.partner_id.id and rec.prod_cust_id.default_code == self.product_id.default_code and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id and rec.date_start <= date.today() and rec.date_end >= date.today()).mapped('price')
+            # elif (i.date_start is False and i.date_end is not False):
+            #     prd_price = self.product_id.new_tax_line_id.filtered(lambda rec: rec.name.id == self.order_id.partner_id.id and rec.prod_cust_id.default_code == self.product_id.default_code and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id and date.today() <= rec.date_end).mapped(
+            #         'price')
+            # elif (i.date_start is not False and i.date_end is False):
+            #     prd_price = self.product_id.new_tax_line_id.filtered(lambda rec: rec.name.id == self.order_id.partner_id.id and rec.prod_cust_id.default_code == self.product_id.default_code and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id and rec.date_start <= date.today()).mapped(
+            #         'price')
+            else:
+                prd_price = self.product_id.new_tax_line_id.filtered(lambda rec: rec.name.id == self.order_id.partner_id.id and rec.prod_cust_id.default_code == self.product_id.default_code and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id and rec.date_start <= date.today() <= rec.date_end).mapped('price')
         if prd_price:
             vals['price_unit'] = prd_price[0]
         # if self.order_id.pricelist_id and self.order_id.partner_id:
@@ -89,21 +89,21 @@ class Sale_Inherit_line(models.Model):
             # Commented the below code so that on change of product or Qty Unit Price should not get affected
             prd_price = 0.0
             for i in self.product_id.new_tax_line_id:
-                if (i.date_start is False and i.date_end is False):
+                if (i.date_start and i.date_end is False):
                     prd_price = self.product_id.new_tax_line_id.filtered(lambda
                                                                              rec: rec.name.id == self.order_id.partner_id.id and rec.prod_cust_id.default_code == self.product_id.default_code and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id).mapped(
                         'price')
-                elif (i.date_start is False and i.date_end is not False):
+                # elif (i.date_start is False and i.date_end is not False):
+                #     prd_price = self.product_id.new_tax_line_id.filtered(lambda
+                #                                                              rec: rec.name.id == self.order_id.partner_id.id and rec.prod_cust_id.default_code == self.product_id.default_code and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id and date.today() <= rec.date_end).mapped(
+                #         'price')
+                # elif (i.date_start is not False and i.date_end is False):
+                #     prd_price = self.product_id.new_tax_line_id.filtered(lambda
+                #                                                              rec: rec.name.id == self.order_id.partner_id.id and rec.prod_cust_id.default_code == self.product_id.default_code and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id and rec.date_start <= date.today()).mapped(
+                #         'price')
+                else:
                     prd_price = self.product_id.new_tax_line_id.filtered(lambda
-                                                                             rec: rec.name.id == self.order_id.partner_id.id and rec.prod_cust_id.default_code == self.product_id.default_code and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id and date.today() <= rec.date_end).mapped(
-                        'price')
-                elif (i.date_start is not False and i.date_end is False):
-                    prd_price = self.product_id.new_tax_line_id.filtered(lambda
-                                                                             rec: rec.name.id == self.order_id.partner_id.id and rec.prod_cust_id.default_code == self.product_id.default_code and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id and rec.date_start <= date.today()).mapped(
-                        'price')
-                elif (i.date_start is not False and i.date_end is not False):
-                    prd_price = self.product_id.new_tax_line_id.filtered(lambda
-                                                                             rec: rec.name.id == self.order_id.partner_id.id and rec.prod_cust_id.default_code == self.product_id.default_code and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id and rec.date_start <= date.today() and rec.date_end >= date.today()).mapped(
+                                                                             rec: rec.name.id == self.order_id.partner_id.id and rec.prod_cust_id.default_code == self.product_id.default_code and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id and rec.date_start <= date.today() <= rec.date_end).mapped(
                         'price')
             if prd_price:
                 self.price_unit = prd_price[0]
