@@ -51,14 +51,14 @@ class Sale_Inherit_line(models.Model):
         #     if (i.date_start and i.date_end is False):
         #         prd_price = self.product_id.new_tax_line_id.filtered(lambda rec: rec.name.id == self.order_id.partner_id.id and rec.prod_cust_id.default_code == self.product_id.default_code and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id).mapped(
         #             'price')
-            # elif (i.date_start is False and i.date_end is not False):
-            #     prd_price = self.product_id.new_tax_line_id.filtered(lambda rec: rec.name.id == self.order_id.partner_id.id and rec.prod_cust_id.default_code == self.product_id.default_code and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id and date.today() <= rec.date_end).mapped(
-            #         'price')
-            # elif (i.date_start is not False and i.date_end is False):
-            #     prd_price = self.product_id.new_tax_line_id.filtered(lambda rec: rec.name.id == self.order_id.partner_id.id and rec.prod_cust_id.default_code == self.product_id.default_code and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id and rec.date_start <= date.today()).mapped(
-            #         'price')
-            # else:
-            #     prd_price = self.product_id.new_tax_line_id.filtered(lambda rec: rec.name.id == self.order_id.partner_id.id and rec.prod_cust_id.default_code == self.product_id.default_code and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id and rec.date_start <= date.today() <= rec.date_end).mapped('price')
+        # elif (i.date_start is False and i.date_end is not False):
+        #     prd_price = self.product_id.new_tax_line_id.filtered(lambda rec: rec.name.id == self.order_id.partner_id.id and rec.prod_cust_id.default_code == self.product_id.default_code and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id and date.today() <= rec.date_end).mapped(
+        #         'price')
+        # elif (i.date_start is not False and i.date_end is False):
+        #     prd_price = self.product_id.new_tax_line_id.filtered(lambda rec: rec.name.id == self.order_id.partner_id.id and rec.prod_cust_id.default_code == self.product_id.default_code and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id and rec.date_start <= date.today()).mapped(
+        #         'price')
+        # else:
+        #     prd_price = self.product_id.new_tax_line_id.filtered(lambda rec: rec.name.id == self.order_id.partner_id.id and rec.prod_cust_id.default_code == self.product_id.default_code and self.product_uom_qty >= rec.min_qty and rec.company_id == self.company_id and rec.date_start <= date.today() <= rec.date_end).mapped('price')
         if prd_price:
             vals['price_unit'] = prd_price[0]
         # if self.order_id.pricelist_id and self.order_id.partner_id:
@@ -129,7 +129,6 @@ class Sale_Inherit_line(models.Model):
             'product_id', 'name', 'product_uom', 'tax_id', 'analytic_tag_ids'
         ]
 
-
 class Vender_bills_new(models.Model):
     _inherit = 'account.move'
 
@@ -180,7 +179,6 @@ class Project_inherit_new(models.Model):
 
     allow_forecast = fields.Boolean('Allow forecast')
     sub_task_project_new = fields.Many2one('project.project', 'Sub-task Project')
-
 
 class Inherit_Manufacture(models.Model):
     _inherit = 'mrp.production'

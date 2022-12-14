@@ -39,7 +39,6 @@ class ProductInherit(models.Model):
     def _compute_can_be_expensed(self):
         self.filtered(lambda p: p.type not in ['consu', 'service']).update({'can_be_expensed': False})
 
-
 class ProductInherit(models.Model):
     _inherit = 'product.product'
 
