@@ -4,7 +4,7 @@
     'category': 'Hidden',
     'sequence': 10,
     'summary': 'FoodArt',
-    'depends': ['base', 'purchase', 'account', 'sale', 'product', 'project', 'mrp'],
+    'depends': ['base', 'purchase', 'account', 'sale', 'product', 'project', 'mrp','account_batch_payment'],
     'data': [
         'security/ir.model.access.csv',
         'wizard/Contacts_Import_View.xml',

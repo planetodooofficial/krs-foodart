@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
+
     <record id="inherit_product_fields_view" model="ir.ui.view">
         <field name="name">product.field.view</field>
         <field name="model">product.template</field>

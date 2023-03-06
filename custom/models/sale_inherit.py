@@ -7,7 +7,7 @@ import re
 class Sale_Inherite(models.Model):
     _inherit = 'sale.order'
 
-    carrier_id = fields.Many2one('delivery.carrier', 'Carrier', ondelete='cascade')
+    carrier_id = fields.Many2one('delivery.carrier', string='Carrier', ondelete='cascade')
     effective_date = fields.Date('Effective Date', required=True)
     custom_id = fields.Char("Custom ID")
 
@@ -15,7 +15,7 @@ class Sale_Inherite(models.Model):
 class Sale_Inherit_line(models.Model):
     _inherit = 'sale.order.line'
 
-    new_route = fields.Many2one('stock.location.route', 'Route')
+    new_route = fields.Many2one('stock.route', 'Route')
     bruto_weight = fields.Float('Brut Weight', compute="set_weight")
     nett_weight = fields.Float('Nett Weight', compute="set_weight")
 
@@ -120,7 +120,8 @@ class Sale_Inherit_line(models.Model):
                     self.order_id.date_order,
                     'sale',
                     fiscal_position=self.order_id.fiscal_position_id,
-                    product_price_unit=self._get_display_price(product),
+                    # product_price_unit=self._get_display_price(product),
+                    product_price_unit=self._get_display_price(),
                     product_currency=self.order_id.currency_id
                 )
 
@@ -148,6 +149,7 @@ class product_customerinfo_line(models.Model):
 
     prod_cust_id = fields.Many2one('product.template', 'Product Custom ID')
     name = fields.Many2one('res.partner', 'Customer')
+    partner_id = fields.Many2one('res.partner', 'Customer')
     product_id = fields.Many2one('product.product', 'Product Variant')
     product_name = fields.Char('Customer Product Name')
     product_code = fields.Char('Customer Product Code')
@@ -165,6 +167,7 @@ class Contact_Inherit(models.Model):
     is_vendor = fields.Boolean('Is a Vendor')
     created_by_custom = fields.Many2one(comodel_name="res.users", string="Created by")
     custom_id = fields.Char("Custom ID")
+    vies_failed_message = fields.Char("")
 
 
 class Purchase_Inherit(models.Model):
@@ -179,6 +182,7 @@ class Project_inherit_new(models.Model):
 
     allow_forecast = fields.Boolean('Allow forecast')
     sub_task_project_new = fields.Many2one('project.project', 'Sub-task Project')
+
 
 class Inherit_Manufacture(models.Model):
     _inherit = 'mrp.production'

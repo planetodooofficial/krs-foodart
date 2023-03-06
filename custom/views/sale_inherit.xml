@@ -110,6 +110,7 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='property_payment_term_id']" position="before">
                 <field name="is_customer"/>
+                <field name="vies_failed_message" invisible="1"/>
             </xpath>
             <xpath expr="//field[@name='property_supplier_payment_term_id']" position="before">
                 <field name="is_vendor"/>
