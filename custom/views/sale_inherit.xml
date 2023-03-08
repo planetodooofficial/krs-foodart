@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="inherit_sale_view" model="ir.ui.view">
+        <field name="name">inherit.sale.view</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet//group/field[@name='payment_term_id']" position="after">
+                <field name="carrier_id"/>
+            </xpath>
+
+            <xpath expr="//form/sheet/notebook/page[@name='order_lines']/field[@name='order_line']/tree/field[@name='product_uom']"
+                   position="after">
+                <field name="new_route"/>
+            </xpath>
+            <xpath expr="//form/sheet/notebook/page[@name='order_lines']/field[@name='order_line']/tree/field[@name='price_unit']"
+                   position="after">
+                <field name="bruto_weight"/>
+                <field name="nett_weight"/>
+            </xpath>
+            <xpath expr="//form/sheet/notebook/page[@name='other_information']/group/group[@name='sale_shipping']"
+                   position="inside">
+                <field name="effective_date"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="inherit_account_move_view" model="ir.ui.view">
+        <field name="name">inherit.account.move.view</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet/notebook/page[@name='other_info']/group/group[@name='accounting_info_group']/field[@name='invoice_incoterm_id']"
+                   position="after">
+                <field name="user_id" string="Purchase Representative"/>
+                <field name="new_account"/>
+                <field name="new_account_date"/>
+                <field name="new_ref_des"/>
+                <field name="invoice_payment_term_id"/>
+                <!-- invoice new field-->
+                <field name="new_incoterms_id" widget="selection"/>
+            </xpath>
+            <!--            <xpath expr="//form/sheet/notebook/page[@name='other_info']" position="inside">-->
+            <!--                <field name="new_tax_line_id"/>-->
+            <!--            </xpath>-->
+            <xpath expr="//group[@id='header_right_group']/div[2]" position="after">
+                <field name="currency_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="inherit_product_temp_view" model="ir.ui.view">
+        <field name="name">inherit.product.temp.view</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='sales']/group[@name='sale']" position="after">
+                <group name="invoicing" string="Invoicing">
+                    <field name="invoice_policy" widget="radio"/>
+                    <field name="expense_policy" widget="radio"/>
+                </group>
+                <h1>Customer</h1>
+                <field name="new_tax_line_id">
+                    <tree>
+                        <field name="name"/>
+                        <field name="product_id"/>
+                        <field name="product_name"/>
+                        <field name="product_code"/>
+                        <field name="min_qty"/>
+                        <field name="price"/>
+                        <field name="date_start"/>
+                        <field name="date_end"/>
+                        <field name="company_id"/>
+                    </tree>
+                </field>
+            </xpath>
+
+            <xpath expr="//form/sheet[@name='product_form']/div[@name='options']" position="inside">
+                <span class="d-inline-block">
+                    <field name="landed_cost_ok"/>
+                    <label for="landed_cost_ok"/>
+                </span>
+                <span class="d-inline-block">
+                    <field name="can_be_expensed"/>
+                    <label for="can_be_expensed"/>
+                </span>
+            </xpath>
+
+            <xpath expr="//page[@name='general_information']/group/group/field[@name='detailed_type']" position="after">
+                <field name="box_ean14"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="inherit_product_templet_new_view" model="ir.ui.view">
+        <field name="name">inherit.product.templet.new.view</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='barcode']" position="attributes">
+                <attribute name='invisible'>0</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="inherit_contact_new_view" model="ir.ui.view">
+        <field name="name">inherit.contact.new.view</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='property_payment_term_id']" position="before">
+                <field name="is_customer"/>
+            </xpath>
+            <xpath expr="//field[@name='property_supplier_payment_term_id']" position="before">
+                <field name="is_vendor"/>
+            </xpath>
+
+            <xpath expr="//field[@name='function']" position="replace">
+                <field name="function"/>
+            </xpath>
+
+            <xpath expr="//field[@name='title']" position="replace">
+                <field name="title"/>
+            </xpath>
+
+            <xpath expr="//field[@name='property_payment_term_id']" position="before">
+                <field name="message_bounce"/>
+                <field name="barcode"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="inherit_purchase_id_view" model="ir.ui.view">
+        <field name="name">inherit.purchase.id.view</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@name='products']/field[@name='order_line']/tree/field[@name='product_qty']"
+                   position="before">
+                <field name="company_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="inherit_project_project_view" model="ir.ui.view">
+        <field name="name">inherit.project.project.view</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <div>
+                    <field name="allow_forecast" nolabel="1"/>
+                    <label for="allow_forecast" style="font-weight:bold;"/>
+                </div>
+            </xpath>
+            <xpath expr="//page[@name='settings']/group/group" position="inside">
+                <field name="analytic_account_id" invisible="0"/>
+                <field name="sub_task_project_new"/>
+            </xpath>
+            <xpath expr="//notebook/page[@name='settings']/group" position="after">
+                <group>
+                    <group>
+                        <h2>Configuration</h2>
+                        <field name="sequence"/>
+                        <field name="company_id"/>
+                    </group>
+                    <group>
+                        <h2>Time Scheduling</h2>
+                        <field name="resource_calendar_id"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="inherit_project_task_new" model="ir.ui.view">
+        <field name="name">inherit.project.task.new</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='email_from']" position="replace">
+                <field name="email_from" string="Email"/>
+            </xpath>
+            <xpath expr="//field[@name='parent_id']" position="replace">
+                <field name="parent_id" string="Parent Task"/>
+            </xpath>
+            <xpath expr="//field[@name='date_assign']" position="replace">
+                <field name="date_assign" readonly="False"/>
+            </xpath>
+            <xpath expr="//field[@name='date_last_stage_update']" position="replace">
+                <field name="date_last_stage_update" readonly="False"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="inherit_manufacture_view_id" model="ir.ui.view">
+        <field name="name">inherit.manufacture.view.id</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='miscellaneous']/group/group[2]" position="inside">
+                <field name="new_availability"/>
+            </xpath>
+
+            <xpath expr="//field[@name='reserved_availability']" position="replace">
+                <field name="reserved_availability" string="Reserved"/>
+            </xpath>
+
+            <xpath expr="//field[@name='quantity_done']" positiojn="replace">
+                <feild name="quantity_done"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="inherit_sale_order_line_id" model="ir.ui.view">
+        <field name="name">inherit.sale.order.line.id</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='order_lines']//tree//field[@name='price_unit']" position="attributes">
+                <attribute name="widget">monetary</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="inherit_purchase_order_line_id" model="ir.ui.view">
+        <field name="name">inherit.purchase.order.line.id</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='products']//tree//field[@name='price_unit']" position="attributes">
+                <attribute name="widget">monetary</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="inherit_invoice_line_ids" model="ir.ui.view">
+        <field name="name">inherit.invoice.line.ids</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page//field[@name='invoice_line_ids']//tree//field[@name='price_unit']" position="attributes">
+                <attribute name="widget">monetary</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
